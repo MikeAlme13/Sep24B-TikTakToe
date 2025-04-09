@@ -104,16 +104,16 @@ function checkWinner(symbol) {
         if (board[0][i] === symbol && board[1][i] === symbol && board[2][i] === symbol) return true;
     }
     
-    // Diagonal check (top-left to bottom-right)
+    // Diagonal check 
     if (board[0][0] === symbol && board[1][1] === symbol && board[2][2] === symbol) return true;
     
-    // Diagonal check (top-right to bottom-left)
+    // Diagonal check 
     if (board[0][2] === symbol && board[1][1] === symbol && board[2][0] === symbol) return true;
     
     return false;
 }
 
-// Function to check for a draw (when all cells are filled and no winner)
+// Function to check for a draw 
 function isDraw() {
     return board.flat().every(cell => cell === "X" || cell === "O");
 }
@@ -124,4 +124,29 @@ function updateGameStatus() {
     statusMessage.textContent = `${playerNames[currentPlayer]}'s turn`;
 }
 
+
+function resetGame() {
+    // Reset the board and game state
+    board = [
+        ["1", "2", "3"],
+        ["4", "5", "6"],
+        ["7", "8", "9"]
+    ];
+    const cells = document.querySelectorAll('td');
+    cells.forEach(cell => cell.textContent = cell.id.charAt(1) + cell.id.charAt(3)); // Reset cell content
+    document.getElementById('game-status').textContent = `${playerNames[0]}'s turn`;
+    gameActive = true;
+    currentPlayer = 0;
+    document.getElementById('reset').style.display = 'none'; // Hide reset button
+}
+
+// Get the row number from the cell id
+function getRow(cellId) {
+    return parseInt(cellId.charAt(1)); // Row is the second character of the cell id
+}
+
+// Get the column number from the cell id
+function getCol(cellId) {
+    return parseInt(cellId.charAt(3)); 
+}
 
