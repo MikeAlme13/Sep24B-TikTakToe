@@ -33,7 +33,43 @@ function startGame() {
     }
 }
 
-function changeTurn() {
-    if (playerTurn == 1) playerTurn = 2;
-    else playerTurn = 1;
+// Set up the game board
+function setUpGameBoard() {
+    const cells = document.querySelectorAll('td');
+    cells.forEach(cell => {
+        cell.addEventListener('click', handleCellClick);
+    });
 }
+
+// Function to handle cell click and change the character
+function handleCellClick(event) {
+    const cell = event.target;
+
+    // If the cell already has a mark (X or O), return
+    if (cell.textContent === "X" || cell.textContent === "O") return;
+
+    // Set the current player's mark (X for Player 1, O for Player 2)
+    const currentSymbol = currentPlayer === 0 ? "X" : "O";
+    cell.textContent = currentSymbol;
+
+    // Switch the turn to the next player
+    currentPlayer = 1 - currentPlayer; // Toggle between 0 and 1 (Player 1 and Player 2)
+    updateGameStatus(); // Update the game status message
+}
+
+// Function to update the status message to show whose turn it is
+function updateGameStatus() {
+    const statusMessage = document.getElementById('game-status');
+    statusMessage.textContent = `${playerNames[currentPlayer]}'s turn`;
+}
+
+// Set up the game board with event listeners
+function setUpGameBoard() {
+    const cells = document.querySelectorAll('td');
+    cells.forEach(cell => {
+        cell.addEventListener('click', handleCellClick);
+    });
+}
+
+// Call the setUpGameBoard when the game starts
+setUpGameBoard();

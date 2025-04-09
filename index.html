@@ -7,30 +7,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- two players -->
+    <!-- Player 1 Name -->
     <label for="player-name">What is the name of player: <span id="player-num">1</span></label>
     <input type="text" name="player-name" id="player-name">
     <button id="submit">Submit</button>
-    
+
+    <!-- Status Message -->
+    <h2 id="game-status">Waiting for Player 1's name...</h2>
 
     <!-- Grid -->
-     <table>
-         <tr>
+    <table id="game-board">
+        <tr>
             <td id="r0c0">1</td>
             <td id="r0c1">2</td>
             <td id="r0c2">3</td>
-         </tr>
-         <tr>
+        </tr>
+        <tr>
             <td id="r1c0">4</td>
             <td id="r1c1">5</td>
             <td id="r1c2">6</td>
-         </tr>
-         <tr>
+        </tr>
+        <tr>
             <td id="r2c0">7</td>
             <td id="r2c1">8</td>
             <td id="r2c2">9</td>
-         </tr>
-     </table>
+        </tr>
+    </table>
+
+    <!-- Reset Game Button -->
+    <button id="reset" style="display:none;">Restart Game</button>
+
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>
