@@ -52,9 +52,49 @@ function handleCellClick(event) {
     const currentSymbol = currentPlayer === 0 ? "X" : "O";
     cell.textContent = currentSymbol;
 
+// Update the board state based on the clicked cell
+const cellId = cell.id;
+board[getRow(cellId)][getCol(cellId)] = currentSymbol;
+
+// Check if there's a winner or draw after this move
+if (checkWinner(currentSymbol)) { // Check for a winner
+    document.getElementById('game-status').textContent = `${playerNames[currentPlayer]} wins!`;
+    gameActive = false; // Stop the game after a win
+    document.getElementById('reset').style.display = 'inline-block'; // Show reset button
+} else if (isDraw()) { // Check for a draw
+    document.getElementById('game-status').textContent = "It's a draw!";
+    gameActive = false; // Stop the game after a draw
+    document.getElementById('reset').style.display = 'inline-block'; // Show reset button
+} else {
     // Switch the turn to the next player
     currentPlayer = 1 - currentPlayer; // Toggle between 0 and 1 (Player 1 and Player 2)
     updateGameStatus(); // Update the game status message
+    }
+} 
+
+// Function to check for a winner
+function checkWinner(symbol) {
+    // Check rows, columns, and diagonals for a win
+    for (let i = 0; i < 3; i++) {
+        // Row check
+        if (board[i][0] === symbol && board[i][1] === symbol && board[i][2] === symbol) return true;
+        
+        // Column check
+        if (board[0][i] === symbol && board[1][i] === symbol && board[2][i] === symbol) return true;
+    }
+    
+    // Diagonal check (top-left to bottom-right)
+    if (board[0][0] === symbol && board[1][1] === symbol && board[2][2] === symbol) return true;
+    
+    // Diagonal check (top-right to bottom-left)
+    if (board[0][2] === symbol && board[1][1] === symbol && board[2][0] === symbol) return true;
+    
+    return false;
+}
+
+// Function to check for a draw (when all cells are filled and no winner)
+function isDraw() {
+    return board.flat().every(cell => cell === "X" || cell === "O");
 }
 
 // Function to update the status message to show whose turn it is
@@ -62,14 +102,6 @@ function updateGameStatus() {
     const statusMessage = document.getElementById('game-status');
     statusMessage.textContent = `${playerNames[currentPlayer]}'s turn`;
 }
-
-// Set up the game board with event listeners
-function setUpGameBoard() {
-    const cells = document.querySelectorAll('td');
-    cells.forEach(cell => {
-        cell.addEventListener('click', handleCellClick);
-    });
-}
-
 // Call the setUpGameBoard when the game starts
 setUpGameBoard();
+
