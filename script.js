@@ -1,34 +1,35 @@
-let player1name;
-let player2name;
-let playerTurn;
+document.getElementById('submit').addEventListener('click', startGame);
 
-let submitButton = document.getElementById("submit");
-let userInput = document.getElementById("player-name");
-
-submitButton.addEventListener("click", () => {
-    if (!player1name) {
-        player1name = userInput.value;
-        userInput.value = "";
-    } else {
-        player2name = userInput.value;
-        userInput.value = "";
-        userInput.disabled = true;      
-        submitButton.disabled = true;
-        startGame();  
-    }
-});
+let playerNames = ["Player 1", "Player 2"]; // Default player names
+let currentPlayer = 0; // 0 = Player 1, 1 = Player 2
 
 function startGame() {
-    playerTurn = 1;
-    let tds = document.getElementsByTagName("td");
-    for (let i=0; i<tds.length; i++) {
-        tds[i].addEventListener("click", (e) => {
-            if (playerTurn == 1) tds[i].innerText = "X";
-            else tds[i].innerText = "O";
-            checkWin();
-            checkDraw();
-            changeTurn();
-        })
+    const playerName1 = document.getElementById('player-name').value;
+
+    if (playerName1) {
+        // Set Player 1's name
+        playerNames[0] = playerName1;
+        
+        // Prompt for Player 2's name
+        const playerName2 = prompt("Enter Player 2's name:");
+
+        if (playerName2) {
+            // Set Player 2's name
+            playerNames[1] = playerName2;
+
+            // Update the game status
+            document.getElementById('game-status').textContent = `${playerNames[currentPlayer]}'s turn`;
+
+            // Hide the submit button
+            document.getElementById('submit').style.display = 'none';
+
+            // You can now initialize the game logic here
+            // Example: initializeBoard();
+        } else {
+            alert('Please enter Player 2 name.');
+        }
+    } else {
+        alert('Please enter Player 1 name.');
     }
 }
 
